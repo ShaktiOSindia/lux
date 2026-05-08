@@ -31,7 +31,7 @@ defmodule Lux.MixProject do
       # Docs
       name: "Lux",
       source_url: "https://github.com/Spectral-Finance/lux",
-      homepage_url: "https://lux.spectrallbas.xyz",
+      homepage_url: "https://lux.spectrallabs.xyz",
       docs: &docs/0
     ]
   end
