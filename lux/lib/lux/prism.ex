@@ -168,6 +168,10 @@ defmodule Lux.Prism do
     run(path, ".py", input, context)
   end
 
+  def run(%__MODULE__{handler: {:rust, module, function}}, input, context) do
+    apply(module, function, [input, context])
+  end
+
   def run(path, input, context) when is_binary(path) do
     ext = Path.extname(path)
     run(path, ext, input, context)
