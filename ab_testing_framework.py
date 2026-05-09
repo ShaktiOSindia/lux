@@ -1,13 +1,12 @@
 import random
 
-def ab_test(video_id):
-    # Get the video's metadata
-    metadata = youtube_api.get_metadata(video_id)
-    # Create two versions of the video
-    version_a = metadata
-    version_b = metadata
-    # Change the thumbnail of version B
-    version_b['thumbnail'] = 'new_thumbnail.jpg'
-    # Randomly select a version to show to the user
-    version_to_show = random.choice([version_a, version_b])
-    return version_to_show
+def run_ab_test(video_id, test_group):
+    # Get the video's metrics
+    metrics = youtube_api.get_metrics(video_id)
+    # Run the A/B test
+    if test_group == 'control':
+        return metrics
+    elif test_group == 'treatment':
+        # Apply the treatment
+        metrics['views'] += 10
+        return metrics

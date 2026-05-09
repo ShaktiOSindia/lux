@@ -10,9 +10,8 @@ def generate_script(video_title, video_description):
     Intro:
     Welcome to our channel, where we talk about {}
     ".format(video_title)
-    # Add the description to the script
     script += "Today, we're going to discuss {}
     ".format(video_description)
-    # Add the outro to the script
-    script += "Thanks for watching, don't forget to like and subscribe!"
+    # Add the outro
+    script += "Thanks for watching! Don't forget to like and subscribe."
     return script

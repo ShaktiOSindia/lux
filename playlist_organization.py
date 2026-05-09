@@ -6,6 +6,5 @@ def organize_playlists(channel_id):
     # Organize the playlists
     organized_playlists = []
     for playlist in playlists:
-        # Add the playlist to the organized list
-        organized_playlists.append(playlist)
+        organized_playlists.append(playlist['title'])
     return organized_playlists

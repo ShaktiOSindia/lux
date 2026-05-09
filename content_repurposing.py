@@ -5,6 +5,6 @@ def repurpose_content(video_id):
     content = youtube_api.get_content(video_id)
     # Repurpose the content
     repurposed_content = content
-    # Convert the video to a blog post
-    repurposed_content['blog_post'] = 'This is a blog post based on the video'
+    # Add a new format to the content
+    repurposed_content['format'] = 'podcast'
     return repurposed_content
