@@ -3,13 +3,14 @@ defmodule Lux.Lenses.Hyperliquid.HyperliquidPositionLens do
   A lens that fetches account state and open positions from Hyperliquid.
   """
 
-  alias Lux.Config
+  alias Lux.Integrations.Hyperliquid
 
   use Lux.Lens,
     name: "Hyperliquid Position Info",
     description: "Fetches account state and open positions from Hyperliquid",
     method: :post,
-    url: "https://api.hyperliquid.xyz/info",
+    url: Hyperliquid.info_url(),
+    headers: Hyperliquid.headers(),
     schema: %{
       type: :object,
       properties: %{

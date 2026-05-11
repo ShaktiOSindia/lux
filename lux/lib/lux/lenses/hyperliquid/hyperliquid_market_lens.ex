@@ -4,13 +4,14 @@ defmodule Lux.Lenses.Hyperliquid.HyperliquidMarketLens do
   Provides information about available trading pairs, prices, funding rates, and decimals.
   """
 
-  alias Lux.Config
+  alias Lux.Integrations.Hyperliquid
 
   use Lux.Lens,
     name: "Hyperliquid Market Info",
     description: "Fetches market metadata and asset contexts from Hyperliquid",
     method: :post,
-    url: "https://api.hyperliquid.xyz/info",
+    url: Hyperliquid.info_url(),
+    headers: Hyperliquid.headers(),
     schema: %{
       type: :object,
       properties: %{},
