@@ -3,12 +3,14 @@ defmodule Lux.Lenses.YouTube.CommentsLens do
   Lens for fetching YouTube video comments and sentiment analysis context.
   """
 
+  alias Lux.Integrations.YouTube
+
   use Lux.Lens,
     name: "Youtube.CommentsLens",
     description: "Retrieves top comments for a specific YouTube video",
-    url: "https://www.googleapis.com/youtube/v3/commentThreads",
+    url: "#{YouTube.base_url()}/commentThreads",
     method: :get,
-    headers: [{"content-type", "application/json"}],
+    headers: YouTube.headers(),
     schema: %{
       type: :object,
       properties: %{
@@ -19,20 +21,20 @@ defmodule Lux.Lenses.YouTube.CommentsLens do
         maxResults: %{
           type: :integer,
           default: 20
-        },
-        key: %{
-          type: :string,
-          description: "YouTube Data API v3 Key"
         }
       },
-      required: ["videoId", "key"]
-    }
+      required: ["videoId"]
+      }
 
-  @doc """
-  Transforms the API response into a list of comments.
-  """
-  @impl true
-  def after_focus(%{"items" => items}) when is_list(items) do
+      def before_focus(params) do
+      Map.merge(params, %{"key" => YouTube.api_key(), "part" => "snippet"})
+      end
+
+      @doc """
+      Transforms the API response into a list of comments.
+      """
+      @impl true
+      def after_focus(%{"items" => items}) do
     comments = Enum.map(items, fn item ->
       get_in(item, ["snippet", "topLevelComment", "snippet", "textDisplay"])
     end)

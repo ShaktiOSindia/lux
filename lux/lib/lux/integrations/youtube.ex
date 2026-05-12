@@ -3,6 +3,8 @@ defmodule Lux.Integrations.YouTube do
   Integration with the YouTube Data API for content intelligence and management.
   """
 
+  alias Lux.Config
+
   @type api_key :: String.t()
 
   @doc """
@@ -10,7 +12,7 @@ defmodule Lux.Integrations.YouTube do
   """
   @spec api_key() :: api_key()
   def api_key do
-    Application.fetch_env!(:lux, :api_keys)[:google_youtube]
+    Config.google_youtube_api_key()
   end
 
   @doc """

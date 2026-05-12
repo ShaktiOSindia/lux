@@ -1,0 +1,45 @@
+# YouTube Content Intelligence Guide
+
+```elixir
+Mix.install([
+  {:lux, ">= 0.5.0"}
+])
+```
+
+## Overview
+
+The YouTube Content Intelligence system provides autonomous research and optimization capabilities for YouTube content creators. It enables agents to stay ahead of trends by analyzing real-time market data and generating high-CTR metadata.
+
+Key Components:
+*   **YouTubeTrendingLens**: Fetches real-time trending data from the YouTube Data API.
+*   **ContentOptimizerPrism**: Analyzes trends and generates optimized titles, tags, and SEO scores.
+*   **ContentIntelligenceBeam**: Orchestrates the full research-to-optimization workflow.
+
+## Configuration
+
+To use this system, you must configure a Google YouTube API key in your environment:
+
+```bash
+export GOOGLE_YOUTUBE_API_KEY="your-api-key"
+```
+
+## Usage Example
+
+### Running the Intelligence Beam
+
+```elixir
+alias Lux.Beams.YouTube.ContentIntelligenceBeam
+
+{:ok, report} = ContentIntelligenceBeam.run(%{
+  subject: "AI Agent Development in 2026",
+  region: "US"
+})
+
+IO.inspect(report.intelligence_report)
+```
+
+## How it Works
+
+1.  **Market Sensing**: The `YouTubeTrendingLens` queries the YouTube Data API for the most popular videos in your target region.
+2.  **Cognitive Analysis**: The `ContentOptimizerPrism` feeds this trend data along with your target subject into an LLM.
+3.  **Output**: The system produces a structured report containing an optimized title, a keyword-rich description, and a set of 15 trending tags, accompanied by an SEO readiness score.

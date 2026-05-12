@@ -91,6 +91,15 @@ defmodule Lux.Config do
   end
 
   @doc """
+  Gets the Google YouTube API key from configuration.
+  Raises if the key is not configured.
+  """
+  @spec google_youtube_api_key() :: api_key()
+  def google_youtube_api_key do
+    get_required_key(:api_keys, :google_youtube)
+  end
+
+  @doc """
   Gets the Hyperliquid account's private key from configuration.
   Raises if the key is not configured.
   """

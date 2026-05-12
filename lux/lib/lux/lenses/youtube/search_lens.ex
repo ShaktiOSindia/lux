@@ -3,12 +3,14 @@ defmodule Lux.Lenses.YouTube.SearchLens do
   Lens for searching YouTube videos and channels using the YouTube Data API v3.
   """
 
+  alias Lux.Integrations.YouTube
+
   use Lux.Lens,
     name: "Youtube.SearchLens",
     description: "Searches for YouTube content matching a specific query",
-    url: "https://www.googleapis.com/youtube/v3/search",
+    url: "#{YouTube.base_url()}/search",
     method: :get,
-    headers: [{"content-type", "application/json"}],
+    headers: YouTube.headers(),
     schema: %{
       type: :object,
       properties: %{
@@ -29,20 +31,20 @@ defmodule Lux.Lenses.YouTube.SearchLens do
         maxResults: %{
           type: :integer,
           default: 5
-        },
-        key: %{
-          type: :string,
-          description: "YouTube Data API v3 Key"
         }
       },
-      required: ["q", "key"]
+      required: ["q"]
     }
 
-  @doc """
-  Transforms the API response into a list of search results.
-  """
-  @impl true
-  def after_focus(%{"items" => items}) when is_list(items) do
+    def before_focus(params) do
+    Map.merge(params, %{"key" => YouTube.api_key()})
+    end
+
+    @doc """
+    Transforms the API response into a list of search results.
+    """
+    @impl true
+    def after_focus(%{"items" => items}) do
     results = Enum.map(items, fn item ->
       %{
         id: get_in(item, ["id", "videoId"]),
