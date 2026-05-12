@@ -13,11 +13,27 @@ RUN pip install --no-cache-dir hyperliquid-python-sdk eth-account erlport Pillow
 WORKDIR /app
 COPY . .
 
+# Remove any potentially interfering env files from the host
+RUN rm -f .env .envrc test.envrc test.override.envrc dev.envrc dev.override.envrc lux/.env lux/.envrc lux/test.envrc
+
 # Set environment variables for testing
 ENV MIX_ENV=test
 ENV OPENAI_API_KEY=mock_key
 ENV TOGETHER_API_KEY=mock_key
 ENV GOOGLE_YOUTUBE_API_KEY=mock_key
+ENV HYPERLIQUID_PRIVATE_KEY=0000000000000000000000000000000000000000000000000000000000000001
+ENV HYPERLIQUID_ADDRESS=0x0000000000000000000000000000000000000001
+ENV HYPERLIQUID_API_URL=https://api.hyperliquid.xyz/info
+ENV WALLET_ADDRESS=0x0000000000000000000000000000000000000001
+ENV WALLET_PRIVATE_KEY=0000000000000000000000000000000000000000000000000000000000000001
+ENV RPC_URL=https://eth.llamarpc.com
+ENV ALCHEMY_API_KEY=mock_key
+ENV MIRA_API_KEY=mock_key
+ENV ANTHROPIC_API_KEY=mock_key
+ENV OPENWEATHER_API_KEY=mock_key
+ENV TRANSPOSE_API_KEY=mock_key
+ENV DISCORD_API_KEY=mock_key
+ENV ETHERSCAN_API_KEY=mock_key
 
 # Move to the lux package directory
 WORKDIR /app/lux

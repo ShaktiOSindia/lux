@@ -125,6 +125,8 @@ defmodule Lux.Prism do
         Lux.Prism.run(__MODULE__, input, context)
       end
 
+      def name, do: view().name
+
       @doc """
       Returns the Prism struct for this module.
       """
