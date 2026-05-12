@@ -11,14 +11,14 @@ defmodule Lux.YoutubePipelineTest do
 
   describe "YouTube Pipeline Integration" do
     test "PipelineBeam runs the full sequence with research" do
-      input = %{
+      _input = %{
         topic: "Autonomous AI Agents",
         research_query: "AI Agents 2026",
         tone: "educational",
         api_key: "mock_key"
       }
 
-      ctx = %{
+      _ctx = %{
         llm_config: %{
           model: "gpt-4o",
           temperature: 0.7
@@ -33,12 +33,12 @@ defmodule Lux.YoutubePipelineTest do
 
   describe "YouTube Prisms" do
     test "ScriptPrism handles basic input" do
-      input = %{topic: "Test Topic"}
+      _input = %{topic: "Test Topic"}
       assert ScriptPrism.name() == "YouTube Script Generator"
     end
 
     test "MetadataPrism handles basic input" do
-      input = %{script_summary: "A video about AI"}
+      _input = %{script_summary: "A video about AI"}
       assert MetadataPrism.name() == "YouTube Metadata Generator"
     end
 

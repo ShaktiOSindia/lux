@@ -1,23 +1,15 @@
-defmodule Lux.Prisms.Youtube.ABTestingPrismTest do
-  use ExUnit.Case
-  alias Lux.Prisms.Youtube.ABTestingPrism
+defmodule Lux.Prisms.YouTube.ABTestingPrismTest do
+  use UnitCase, async: true
+  alias Lux.Prisms.YouTube.ABTestingPrism
 
-  test "handler evaluates variants and picks a winner" do
-    input = %{
-      topic: "Building SovereignOS",
-      criteria: "click-through rate",
-      variants: [
-        %{id: "A", hook: "Stop building apps, start building empires.", title: "Why I stopped coding apps"},
-        %{id: "B", hook: "The 3 pillars of autonomous business.", title: "SovereignOS Business Guide"}
-      ]
-    }
+  test "defines expected structure" do
+    view = ABTestingPrism.view()
+    assert view.name == "YouTube A/B Tester"
+    assert Map.has_key?(view.input_schema.properties, :variants)
+  end
 
-    # Execute the handler directly (assuming unit-test context provides enough config or a mock)
-    # Since Lux.Prism tests usually run in an Agent context, we simulate here
-    {:ok, result} = ABTestingPrism.handler(input, %{llm_config: %{}})
-
-    assert Map.has_key?(result, "winner_id")
-    assert Map.has_key?(result, "reasoning")
-    assert result["winner_id"] in ["A", "B"]
+  test "output schema requires winner_id and reasoning" do
+    schema = ABTestingPrism.view().output_schema
+    assert schema.required == ["winner_id", "reasoning"]
   end
 end

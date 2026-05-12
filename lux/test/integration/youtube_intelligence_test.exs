@@ -23,7 +23,8 @@ defmodule Lux.Integration.YouTubeIntelligenceTest do
       # We verify that the beam can be initialized and has a valid sequence.
       beam = ContentIntelligenceBeam.view()
       assert beam.name == "YouTube Content Intelligence"
-      assert length(beam.definition[:sequence]) == 2
+      {:sequence, steps} = beam.definition
+      assert length(steps) == 2
     end
   end
 end

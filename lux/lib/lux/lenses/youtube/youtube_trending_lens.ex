@@ -3,13 +3,14 @@ defmodule Lux.Lenses.YouTube.YouTubeTrendingLens do
   A lens that fetches trending YouTube topics and metadata using the YouTube Data API.
   """
 
-  alias Lux.Config
+  alias Lux.Integrations.YouTube
 
   use Lux.Lens,
     name: "YouTube Trending Intelligence",
     description: "Fetches trending video data and topic metadata from YouTube",
     method: :get,
-    url: "https://www.googleapis.com/youtube/v3/videos",
+    url: "#{YouTube.base_url()}/videos",
+    headers: YouTube.headers(),
     schema: %{
       type: :object,
       properties: %{
@@ -20,9 +21,8 @@ defmodule Lux.Lenses.YouTube.YouTubeTrendingLens do
     }
 
   def before_focus(params) do
-    # Google API Key is required
-    api_key = Application.get_env(:lux, :api_keys)[:google_youtube] || ""
-    Map.merge(params, %{"key" => api_key, "part" => "snippet,statistics,contentDetails"})
+    # Google API Key is handled by YouTube integration
+    Map.merge(params, %{"key" => YouTube.api_key(), "part" => "snippet,statistics,contentDetails"})
   end
 
   def after_focus(%{"items" => items}) do
