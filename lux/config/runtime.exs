@@ -4,7 +4,8 @@ import Dotenvy
 if config_env() == :test do
   source([
     "../test.envrc",
-    "../test.override.envrc"
+    "../test.override.envrc",
+    System.get_env()
   ])
 else
   source(["../#{config_env()}.envrc", "../#{config_env()}.override.envrc", System.get_env()])
@@ -25,6 +26,7 @@ if config_env() in [:dev, :test] do
     etherscan: env!("ETHERSCAN_API_KEY", :string!, "missing etherscan"),
     etherscan_pro: env!("ETHERSCAN_API_KEY_PRO", :string!, required: false) == "true",
     telegram_bot: env!("TELEGRAM_BOT_TOKEN", :string!, required: false),
+    google_youtube: env!("GOOGLE_YOUTUBE_API_KEY", :string!, "missing youtube key"),
     integration_openai: env!("INTEGRATION_OPENAI_API_KEY", :string!, "missing open ai"),
     integration_anthropic: env!("INTEGRATION_ANTHROPIC_API_KEY", :string!, "missing anthropic"),
     integration_openweather: env!("INTEGRATION_OPENWEATHER_API_KEY", :string!, "missing open weather"),

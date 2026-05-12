@@ -4,7 +4,7 @@ defmodule Lux.Prisms.YouTube.ABTestingPrism do
   """
 
   use Lux.Prism,
-    name: "YouTube A/B Tester",
+    name: "YouTube A/B Content Tester",
     description: "Evaluates two variations of YouTube content to determine the optimal hook or title",
     input_schema: %{
       type: :object,

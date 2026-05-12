@@ -3,12 +3,14 @@ defmodule Lux.Lenses.YouTube.VideoLens do
   Lens for fetching YouTube video information and statistics using the YouTube Data API v3.
   """
 
+  alias Lux.Integrations.YouTube
+
   use Lux.Lens,
     name: "Youtube.VideoLens",
     description: "Retrieves metadata, snippets, and statistics for a specific YouTube video",
-    url: "https://www.googleapis.com/youtube/v3/videos",
+    url: "#{YouTube.base_url()}/videos",
     method: :get,
-    headers: [{"content-type", "application/json"}],
+    headers: YouTube.headers(),
     schema: %{
       type: :object,
       properties: %{
@@ -20,14 +22,14 @@ defmodule Lux.Lenses.YouTube.VideoLens do
           type: :string,
           description: "Comma-separated list of video resource properties (snippet, statistics, contentDetails)",
           default: "snippet,statistics"
-        },
-        key: %{
-          type: :string,
-          description: "YouTube Data API v3 Key"
         }
       },
-      required: ["id", "key"]
+      required: ["id"]
     }
+
+  def before_focus(params) do
+    Map.merge(params, %{"key" => YouTube.api_key()})
+  end
 
   @doc """
   Transforms the API response into the Lux format.

@@ -1,5 +1,5 @@
 defmodule Lux.Lenses.YouTube.SearchLensTest do
-  use Lux.UnitCase, async: true
+  use UnitCase, async: true
 
   alias Lux.Lenses.YouTube.SearchLens
 

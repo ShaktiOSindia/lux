@@ -4,7 +4,7 @@ defmodule Lux.Prisms.Youtube.ThumbnailGeneratorPrismTest do
   alias Lux.Prism
 
   test "runs the python thumbnail generator prism" do
-    prism_path = Path.join([__DIR__, "..", "..", "..", "priv", "python", "thumbnail_generator_prism.py"])
+    prism_path = Path.join([:code.priv_dir(:lux), "python", "thumbnail_generator_prism.py"])
     
     input = %{
       "title" => "Test Video Title",
