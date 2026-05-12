@@ -271,8 +271,17 @@ defmodule Lux.Beam do
 
       def view, do: %{@beam_struct | definition: __steps__()}
 
+      def name, do: view().name
+
       def run(input, opts \\ []), do: Lux.Beam.Runner.run(view(), input, opts)
     end
+  end
+
+  @doc """
+  Runs a beam module with the given input.
+  """
+  def run(module, input, opts \\ []) when is_atom(module) do
+    module.run(input, opts)
   end
 
   @doc """

@@ -23,7 +23,7 @@ defmodule Lux.Lenses.Hyperliquid.HyperliquidPositionLens do
     }
 
   def before_focus(params) do
-    user_address = params["user"] || Config.hyperliquid_account_address()
+    user_address = params["user"] || Hyperliquid.address()
 
     if user_address == "" or is_nil(user_address) do
         raise "No user address provided or configured for HyperliquidPositionLens"

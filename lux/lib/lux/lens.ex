@@ -96,6 +96,8 @@ defmodule Lux.Lens do
       """
       def view, do: @lens_struct
 
+      def name, do: view().name
+
       @doc """
       Focuses the lens with the given input.
       """
@@ -105,6 +107,13 @@ defmodule Lux.Lens do
         |> Lux.Lens.authenticate()
         |> Map.update!(:params, &before_focus(&1))
         |> Lux.Lens.focus(opts)
+      end
+
+      @doc """
+      Standard handler for Beam integration.
+      """
+      def handler(input, _context \\ nil) do
+        focus(input)
       end
 
       def after_focus(body), do: {:ok, body}
