@@ -1,0 +1,52 @@
+# Rust Language Support
+
+Lux provides native integration with Rust via NIFs (Native Implemented Functions) using the Rustler library. This allows for high-performance computation with memory safety guarantees.
+
+## Installation
+
+The Rust integration requires the Rust toolchain to be installed on your system.
+
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+## Usage
+
+The `Lux.Rust` module provides functions to execute Rust tasks.
+
+### Evaluation
+
+You can evaluate pre-defined Rust tasks using `eval/2`.
+
+```elixir
+# Sum a list of integers in Rust
+{:ok, 6} = Lux.Rust.eval("sum", [1, 2, 3])
+
+# Echo back any term
+{:ok, %{a: 1}} = Lux.Rust.eval("echo", %{a: 1})
+```
+
+### Truthiness
+
+Rust-side truthiness can be checked:
+
+```elixir
+true = Lux.Rust.eval!("is_truthy", true)
+false = Lux.Rust.eval!("is_truthy", false)
+false = Lux.Rust.eval!("is_truthy", nil)
+```
+
+## Why NIFs?
+
+Unlike other implementations that use JSON over FFI or command-line bridges, Lux uses **Rustler NIFs**.
+
+| Feature | Lux (Rustler NIF) | Competitors (JSON/FFI Bridge) |
+|---------|-------------------|-------------------------------|
+| Performance | **Ultra-High** (Native) | Medium (Serialization overhead) |
+| Memory | **Zero-Copy** (Direct) | High (Copying buffers) |
+| Safety | **High** (Rustler guards) | Medium (Manual pointer management) |
+| Integration | **Seamless** (Elixir terms) | Complex (Manual type mapping) |
+
+## Adding Native Operations
+
+To add new native operations, modify `lux/native/lux_native/src/lib.rs` and update the `match` statement in the `evaluate` function.
